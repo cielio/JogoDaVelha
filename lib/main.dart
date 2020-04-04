@@ -29,22 +29,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _textPlayer = '';
-  var gabaritoX = [[], [], []];
-  var gabaritoY = [[], [], []];
-  var jogo = [[], [], []];
-  var startJogo = Jogo();
+  List _gabaritoP1 = [[], [], []];
+  List _gabaritoP2 = [[], [], []];
+  List _jogo = [[], [], []];
+  Jogo _startJogo = Jogo();
+  bool _isPlayerCorent = true;
+  String _jogardor = 'Player 1';
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    startJogo.iniciaLista(jogo, ' ');
-    startJogo.iniciaLista(gabaritoX, 'x');
-  }
-
-  void _incrementCounter() {
-    setState(() {});
+    _startJogo.iniciaLista(_jogo, ' ');
+    _startJogo.iniciaLista(_gabaritoP1, 'x');
+    _startJogo.iniciaLista(_gabaritoP2, 'o');
   }
 
   @override
@@ -61,9 +58,24 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                VelhaBotao(),
-                VelhaBotao(),
-                VelhaBotao(),
+                VelhaBotao(
+                  text: _jogo[0][0],
+                  onPressed: () {
+                    verificaJogada(0, 0, qualJogador());
+                  },
+                ),
+                VelhaBotao(
+                  text: _jogo[0][1],
+                  onPressed: () {
+                    verificaJogada(0, 1, qualJogador());
+                  },
+                ),
+                VelhaBotao(
+                  text: _jogo[0][2],
+                  onPressed: () {
+                    verificaJogada(0, 2, qualJogador());
+                  },
+                ),
               ],
             ),
             SizedBox(height: 15),
@@ -71,34 +83,111 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 VelhaBotao(
-                  text: _textPlayer,
+                  text: _jogo[1][0],
                   onPressed: () {
-                    setState(() {
-                      _textPlayer = 'x';
-                      jogo[1][0] = _textPlayer = 'x';
-                      startJogo.verificaGanhador(jogo, gabaritoX);
-                      print(jogo[0]);
-                      print(jogo[1]);
-                      print(jogo[2]);
-                    });
+                    verificaJogada(1, 0, qualJogador());
                   },
                 ),
-                VelhaBotao(),
-                VelhaBotao(),
+                VelhaBotao(
+                  text: _jogo[1][1],
+                  onPressed: () {
+                    verificaJogada(1, 1, qualJogador());
+                  },
+                ),
+                VelhaBotao(
+                  text: _jogo[1][2],
+                  onPressed: () {
+                    verificaJogada(1, 2, qualJogador());
+                  },
+                ),
               ],
             ),
             SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                VelhaBotao(),
-                VelhaBotao(),
-                VelhaBotao(),
+                VelhaBotao(
+                  text: _jogo[2][0],
+                  onPressed: () {
+                    verificaJogada(2, 0, qualJogador());
+                  },
+                ),
+                VelhaBotao(
+                  text: _jogo[2][1],
+                  onPressed: () {
+                    verificaJogada(2, 1, qualJogador());
+                  },
+                ),
+                VelhaBotao(
+                  text: _jogo[2][2],
+                  onPressed: () {
+                    verificaJogada(2, 2, qualJogador());
+                  },
+                ),
               ],
             ),
           ],
         ),
       ),
+    );
+  }
+
+  String qualJogador() {
+    if (_isPlayerCorent) {
+      _isPlayerCorent = false;
+      _jogardor = 'Player 1';
+      return 'x';
+    } else {
+      _isPlayerCorent = true;
+      _jogardor = 'Player 2';
+
+      return 'o';
+    }
+  }
+
+  void verificaJogada(int x, int y, String jogada) {
+    setState(() {
+      _jogo[x][y] = jogada;
+      if (_startJogo.verificaGanhador(_jogo, _gabaritoP1) ||
+          _startJogo.verificaGanhador(_jogo, _gabaritoP2)) {
+        _showDialog(_jogardor);
+      }
+    });
+
+    print(_jogo[0]);
+    print(_jogo[1]);
+    print(_jogo[2]);
+  }
+
+  void reStart() {
+    setState(() {
+      _startJogo.limpaLista(_jogo);
+    });
+  }
+
+  void _showDialog(String jogador) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // retorna um objeto do tipo Dialog
+        return AlertDialog(
+          title: new Text("Ganhador"),
+          content: new Text(jogador),
+          actions: <Widget>[
+            // define os botões na base do dialogo
+            new FlatButton(
+              child: new Text(
+                "Start",
+                style: TextStyle(fontSize: 20),
+              ),
+              onPressed: () {
+                reStart();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
