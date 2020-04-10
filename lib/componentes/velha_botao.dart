@@ -1,25 +1,33 @@
 import 'package:flutter/material.dart';
 
-class VelhaBotao extends StatelessWidget {
+class VelhaBotao extends StatefulWidget {
   final void Function() onPressed;
-  final String text;
+  final String image;
 
-  VelhaBotao({this.text = '', this.onPressed});
+  VelhaBotao({this.image = '', this.onPressed});
+
+  @override
+  _VelhaBotaoState createState() => _VelhaBotaoState();
+}
+
+class _VelhaBotaoState extends State<VelhaBotao> {
+  bool _isButtonDisabled = false;
 
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      onPressed: onPressed,
+      onPressed: () {
+        if (_isButtonDisabled) {
+          return null;
+        } else {
+          widget.onPressed();
+          _isButtonDisabled = true;
+        }
+      },
       child: Container(
         height: 100,
         width: 100,
-        color: Colors.blue,
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(fontSize: 80),
-          ),
-        ),
+        child: Image.asset('images/${widget.image}.png'),
       ),
     );
   }

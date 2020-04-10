@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Jogo da Velha'),
     );
   }
 }
@@ -52,81 +52,90 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(5.0),
-        child: Column(
-          children: <Widget>[
-            Padding(padding: EdgeInsets.all(8)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                VelhaBotao(
-                  text: _jogo[0][0],
-                  onPressed: () {
-                    verificaJogada(0, 0, qualJogador());
-                  },
-                ),
-                VelhaBotao(
-                  text: _jogo[0][1],
-                  onPressed: () {
-                    verificaJogada(0, 1, qualJogador());
-                  },
-                ),
-                VelhaBotao(
-                  text: _jogo[0][2],
-                  onPressed: () {
-                    verificaJogada(0, 2, qualJogador());
-                  },
-                ),
-              ],
+        child: Container(
+          height: 375,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("images/taboleiro.png"),
+              fit: BoxFit.fill,
             ),
-            SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                VelhaBotao(
-                  text: _jogo[1][0],
-                  onPressed: () {
-                    verificaJogada(1, 0, qualJogador());
-                  },
-                ),
-                VelhaBotao(
-                  text: _jogo[1][1],
-                  onPressed: () {
-                    verificaJogada(1, 1, qualJogador());
-                  },
-                ),
-                VelhaBotao(
-                  text: _jogo[1][2],
-                  onPressed: () {
-                    verificaJogada(1, 2, qualJogador());
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                VelhaBotao(
-                  text: _jogo[2][0],
-                  onPressed: () {
-                    verificaJogada(2, 0, qualJogador());
-                  },
-                ),
-                VelhaBotao(
-                  text: _jogo[2][1],
-                  onPressed: () {
-                    verificaJogada(2, 1, qualJogador());
-                  },
-                ),
-                VelhaBotao(
-                  text: _jogo[2][2],
-                  onPressed: () {
-                    verificaJogada(2, 2, qualJogador());
-                  },
-                ),
-              ],
-            ),
-          ],
+          ),
+          child: Column(
+            children: <Widget>[
+              Padding(padding: EdgeInsets.all(8)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  VelhaBotao(
+                    image: _jogo[0][0],
+                    onPressed: () {
+                      verificaJogada(0, 0, qualJogador());
+                    },
+                  ),
+                  VelhaBotao(
+                    image: _jogo[0][1],
+                    onPressed: () {
+                      verificaJogada(0, 1, qualJogador());
+                    },
+                  ),
+                  VelhaBotao(
+                    image: _jogo[0][2],
+                    onPressed: () {
+                      verificaJogada(0, 2, qualJogador());
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  VelhaBotao(
+                    image: _jogo[1][0],
+                    onPressed: () {
+                      verificaJogada(1, 0, qualJogador());
+                    },
+                  ),
+                  VelhaBotao(
+                    image: _jogo[1][1],
+                    onPressed: () {
+                      verificaJogada(1, 1, qualJogador());
+                    },
+                  ),
+                  VelhaBotao(
+                    image: _jogo[1][2],
+                    onPressed: () {
+                      verificaJogada(1, 2, qualJogador());
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  VelhaBotao(
+                    image: _jogo[2][0],
+                    onPressed: () {
+                      verificaJogada(2, 0, qualJogador());
+                    },
+                  ),
+                  VelhaBotao(
+                    image: _jogo[2][1],
+                    onPressed: () {
+                      verificaJogada(2, 1, qualJogador());
+                    },
+                  ),
+                  VelhaBotao(
+                    image: _jogo[2][2],
+                    onPressed: () {
+                      verificaJogada(2, 2, qualJogador());
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
